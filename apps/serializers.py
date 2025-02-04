@@ -2,8 +2,8 @@
 from rest_framework import serializers
 from rest_framework.serializers import IntegerField,BooleanField
 from rest_framework.relations import PrimaryKeyRelatedField
-
-from apps.models import Trainer, Comment
+from rest_framework.serializers import ModelSerializer
+from apps.models import Trainer, Comment, Student, Lesson
 
 
 class TrainerSerializer(serializers.Serializer):
@@ -23,3 +23,19 @@ class CommentModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
+class TrenirModelSerializer(ModelSerializer):
+    class Meta:
+        model = Trainer
+        fields='__all__'
+
+
+class StudentModelSerializer(ModelSerializer):
+    class Meta:
+        model = Student
+        fields='__all__'
+
+class LessonModelSerializer(ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = ['trainer','student', 'video', 'represenative', 'role']

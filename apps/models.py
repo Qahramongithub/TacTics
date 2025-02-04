@@ -2,7 +2,7 @@ from django.apps import apps
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db.models import CharField, ImageField, ManyToManyField, DateTimeField, \
-    PositiveSmallIntegerField, DecimalField, TextField, ForeignKey, CASCADE, FileField, BooleanField
+    PositiveSmallIntegerField, DecimalField, TextField, ForeignKey, CASCADE, FileField, BooleanField,TextChoices
 from django.db.models import Model
 
 
@@ -85,8 +85,13 @@ class Student(User):
 
 
 class Lesson(Model):
+    class VideoRole(TextChoices):
+        VIDEO_SOROV = 'video sorov', 'Video Sorov'
+        SAVOL_JAVOB = 'savol javob', 'Savol Javob'
+        INDIVIDUAL_TAKTIKA = 'individual taktika', 'Individual Taktika'
     trainer = ForeignKey('apps.Trainer', on_delete=CASCADE, related_name='lessons')
     video = FileField(upload_to="video/%y/%m/%d/", null=True, blank=True)
     title = CharField(max_length=255)
     represenative = CharField(max_length=255, null=True, blank=True)
     student = ForeignKey('apps.Student', on_delete=CASCADE, related_name='lessons')
+    role = CharField(max_length=255, choices=VideoRole.choices)  # noqa
